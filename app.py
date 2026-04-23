@@ -15,6 +15,7 @@ def home():
     if request.method == "POST":
         url = request.form["url"]
 
+        # Rule-based check
         if "@" in url or "login" in url or "verify" in url or ".xyz" in url:
             result = "⚠️ Phishing Website (rule-based)"
         else:
@@ -28,6 +29,7 @@ def home():
                 result = "✅ Legitimate Website"
 
     return render_template("index.html", result=result)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
