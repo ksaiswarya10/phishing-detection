@@ -1,60 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Phishing Detector</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection Tool</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
-            background: linear-gradient(to right, #0f172a, #1e293b);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #111827);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
-            text-align: center;
-            margin-top: 100px;
         }
 
-        .box {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 12px;
-            width: 400px;
-            margin: auto;
-            box-shadow: 0px 0px 20px rgba(0,0,0,0.6);
-        }
-
-        input {
+        .container {
             width: 90%;
-            padding: 12px;
-            border-radius: 6px;
-            border: none;
-            margin-top: 10px;
+            max-width: 520px;
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 18px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 46px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            font-size: 15px;
+            margin: 12px 0 28px;
+            line-height: 1.5;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            background: #0f172a;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
 
         button {
-            padding: 12px 25px;
-            background-color: #3b82f6;
-            color: white;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            transition: transform 0.15s ease, opacity 0.15s ease;
         }
 
         button:hover {
-            background-color: #2563eb;
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
         }
 
         .phishing {
-            color: #ef4444;
-            font-weight: bold;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.35);
         }
 
         .safe {
-            color: #22c55e;
-            font-weight: bold;
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #94a3b8;
         }
 
         .loader {
             display: none;
-            margin-top: 15px;
+            margin-top: 18px;
+            color: #93c5fd;
+            font-size: 14px;
         }
     </style>
 
@@ -64,30 +130,34 @@
         }
     </script>
 </head>
-
 <body>
-
-    <div class="box">
-        <h1>🔐 Phishing Detection Tool</h1>
+    <div class="container">
+        <div class="icon">🔐</div>
+        <h1>Phishing Detection Tool</h1>
+        <p class="subtitle">
+            Check whether a URL looks suspicious using rule-based analysis and machine learning.
+        </p>
 
         <form method="POST" onsubmit="showLoader()">
-            <input type="text" name="url" placeholder="Enter URL" required>
-            <br><br>
-            <button type="submit">Check</button>
+            <input type="text" name="url" placeholder="Enter a website URL..." required>
+            <button type="submit">Check URL</button>
         </form>
 
         <div id="loader" class="loader">
-            ⏳ Checking URL...
+            Checking URL...
         </div>
 
         {% if result %}
             {% if "Phishing" in result %}
-                <h2 class="phishing">{{ result }}</h2>
+                <div class="result phishing">{{ result }}</div>
             {% else %}
-                <h2 class="safe">{{ result }}</h2>
+                <div class="result safe">{{ result }}</div>
             {% endif %}
         {% endif %}
-    </div>
 
+        <div class="footer">
+            Built with Flask, machine learning, and phishing heuristics.
+        </div>
+    </div>
 </body>
 </html>
