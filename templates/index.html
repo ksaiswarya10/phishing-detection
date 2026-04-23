@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Detector</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: white;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .box {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.6);
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        .phishing {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .safe {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .loader {
+            display: none;
+            margin-top: 15px;
+        }
+    </style>
+
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="box">
+        <h1>🔐 Phishing Detection Tool</h1>
+
+        <form method="POST" onsubmit="showLoader()">
+            <input type="text" name="url" placeholder="Enter URL" required>
+            <br><br>
+            <button type="submit">Check</button>
+        </form>
+
+        <div id="loader" class="loader">
+            ⏳ Checking URL...
+        </div>
+
+        {% if result %}
+            {% if "Phishing" in result %}
+                <h2 class="phishing">{{ result }}</h2>
+            {% else %}
+                <h2 class="safe">{{ result }}</h2>
+            {% endif %}
+        {% endif %}
+    </div>
+
+</body>
+</html>
